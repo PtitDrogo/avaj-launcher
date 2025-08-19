@@ -1,2 +1,3 @@
 src/avajlauncher/Main.java
 src/avajlauncher/test/Hello.java
+src/avajlauncher/ScenarioParser/ScenarioParser.java

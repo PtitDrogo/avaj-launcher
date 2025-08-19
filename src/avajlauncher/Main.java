@@ -1,5 +1,6 @@
 package avajlauncher;
 
+import avajlauncher.ScenarioParser.ScenarioParser;
 import avajlauncher.test.Hello;
 
 public class Main {
@@ -7,17 +8,13 @@ public class Main {
     public static void main(String[] args) {
         Hello.hello();
 
-        //Implementation of Class
+        if (ScenarioParser.validateScenario(args) == false) {
+            return;
+        }
         
-        //Implementation of Class
-        
-        //Implementation of Class
-        
-        //Implementation of Class
-        
-        //Implementation of Class
-        
-        //Implementation of Class
 
+
+        
+        //Implementation of Class
     } 
 }
