@@ -17,7 +17,7 @@ public class AircraftFactory {
             return instance;
         }
 
-        Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
+        public Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
             id++;
             String AircraftType = p_type.toLowerCase();         
 

@@ -1,12 +1,13 @@
-package avajlauncher.scenarioParser;
+package avajlauncher.aircraft;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import avajlauncher.aircraft.AircraftFactory;
+import avajlauncher.Consts;
+import avajlauncher.tower.Tower;
 
 public class ScenarioParser {
-    public Boolean isValidScenario(String[] args) {
+    public Boolean isValidScenario(String[] args, Tower tower) {
         if (args.length != 1) {
             System.out.println("Invalid number of arguments. Exiting ...");
             return false;
@@ -20,7 +21,7 @@ public class ScenarioParser {
                 return false;
             }
             while ((line = reader.readLine()) != null) {
-                if (!validateLine(line)) {
+                if (!validateLine(line, tower)) {
                     reader.close();
                     return false;
                 }
@@ -34,23 +35,29 @@ public class ScenarioParser {
     }
 
 
-    private Boolean validateLine(String line) {
+    private Boolean validateLine(String line, Tower tower) {
         System.out.printf("Validating the line: |%s| \n", line);
         String[] words = line.split("\\s");
-        if (words.length != 5) {
-            System.out.printf("Expected 5 parameters, instead found: |%s|\n", line);
+        if (words.length != Consts.LEN_PARAM) {
+            System.out.printf("Expected %d parameters, instead found: |%s|\n", Consts.LEN_PARAM, line);
             return false;
         }
-        for (int i = 2; i < 4; i++) {
+        for (int i = Consts.I_LONGITUDE; i <= Consts.I_LATITUDE; i++) {
             if (!isValidCoordinate(words[i])) {
                 return false;
             }
         }
-        if (!isValidHeight(words[4])) {
+        if (!isValidHeight(words[Consts.I_HEIGHT])) {
             return false;
         }
-        //We know try to build the aircraft with all our info
-        AircraftFactory factory = AircraftFactory.getInstance();
+        
+
+        //We build our aircraft + add it to towers
+        //Below line is too long :D
+        Coordinates coordinates = new Coordinates(Integer.parseInt(words[Consts.I_LONGITUDE]),Integer.parseInt(words[Consts.I_LATITUDE]), Integer.parseInt(words[Consts.I_HEIGHT]));
+        Flyable flyable = AircraftFactory.getInstance().newAircraft(words[Consts.I_TYPE], words[Consts.I_NAME], coordinates);
+        tower.register(flyable);
+        System.out.println("Adding Flyable to our tower : " + words[Consts.I_TYPE]);
 
 
         return true;

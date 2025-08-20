@@ -6,4 +6,8 @@ src/avajlauncher/aircraft/AircraftFactory.java
 src/avajlauncher/aircraft/Baloon.java
 src/avajlauncher/aircraft/Helicopter.java
 src/avajlauncher/aircraft/Jetplane.java
-src/avajlauncher/scenarioParser/ScenarioParser.java
+src/avajlauncher/aircraft/ScenarioParser.java
+src/avajlauncher/aircraft/ScenarioError.java
+src/avajlauncher/tower/Tower.java
+src/avajlauncher/tower/WeatherTower.java
+src/avajlauncher/tower/WeatherProvider.java
