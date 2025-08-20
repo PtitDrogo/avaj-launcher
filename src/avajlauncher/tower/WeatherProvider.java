@@ -1,5 +1,6 @@
 package avajlauncher.tower;
 
+import avajlauncher.Consts;
 import avajlauncher.aircraft.Coordinates;
 
 public class WeatherProvider {
@@ -10,10 +11,10 @@ public class WeatherProvider {
     };
 
     private String[] weather = {
-            "RAIN",
-            "FOG",
-            "SUN",
-            "SNOW",
+            Consts.RAIN,
+            Consts.FOG,
+            Consts.SUN,
+            Consts.SNOW,
     };
 
     public static WeatherProvider getInstance() {

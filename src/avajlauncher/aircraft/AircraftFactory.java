@@ -1,5 +1,7 @@
 package avajlauncher.aircraft;
 
+import avajlauncher.Consts;
+
 public class AircraftFactory {
         static private long id = 0;
 
@@ -19,16 +21,16 @@ public class AircraftFactory {
 
         public Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
             id++;
-            String AircraftType = p_type.toLowerCase();         
+            String AircraftType = p_type.toUpperCase();         
 
             switch (AircraftType) {
-                case "baloon":
+                case Consts.BALOON:
                     System.out.printf("Created aircraft of type |%s| with id %d\n", p_type, id);
                     return new Baloon(id, p_name, p_coordinates);
-                case "helicopter":
+                case Consts.HELICOPTER:
                     System.out.printf("Created aircraft of type |%s| with id %d\n", p_type, id);
                     return new Helicopter(id, p_name, p_coordinates);
-                case "jetplane":
+                case Consts.JETPLANE:
                     System.out.printf("Created aircraft of type |%s| with id %d\n", p_type, id);
                     return new Jetplane(id, p_name, p_coordinates);
                 default:

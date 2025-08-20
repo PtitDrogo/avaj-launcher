@@ -12,6 +12,9 @@ public class Consts {
     public static final int I_LATITUDE = 3;
     public static final int I_HEIGHT = 4;
 
-
     public static final int LEN_PARAM = 5;
+
+    public static final String BALOON = "BALOON";
+    public static final String JETPLANE = "JETPLANE";
+    public static final String HELICOPTER = "HELICOPTER";
 }
