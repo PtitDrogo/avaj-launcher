@@ -1,12 +1,14 @@
-package avajlauncher.ScenarioParser;
+package avajlauncher.scenarioParser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import avajlauncher.aircraft.AircraftFactory;
+
 public class ScenarioParser {
     public Boolean isValidScenario(String[] args) {
         if (args.length != 1) {
-            System.err.println("Invalid number of arguments. Exiting ...");
+            System.out.println("Invalid number of arguments. Exiting ...");
             return false;
         }
 
@@ -25,27 +27,32 @@ public class ScenarioParser {
             }
             reader.close();
         } catch (Exception e) {
-            System.err.println("Error while reading the scenario file: " + e.getMessage() + " Exiting ...");
+            System.out.println("Error while reading the scenario file: " + e.getMessage() + " Exiting ...");
             return false;
         }
         return true;
     }
 
+
     private Boolean validateLine(String line) {
         System.out.printf("Validating the line: |%s| \n", line);
         String[] words = line.split("\\s");
         if (words.length != 5) {
-            System.err.printf("Expected 5 parameters, instead found: |%s|\n", line);
+            System.out.printf("Expected 5 parameters, instead found: |%s|\n", line);
             return false;
         }
-        if (!isValidHeight(words[2])) {
-            return false;
-        }
-        for (int i = 3; i < 5; i++) {
+        for (int i = 2; i < 4; i++) {
             if (!isValidCoordinate(words[i])) {
                 return false;
             }
         }
+        if (!isValidHeight(words[4])) {
+            return false;
+        }
+        //We know try to build the aircraft with all our info
+        AircraftFactory factory = AircraftFactory.getInstance();
+
+
         return true;
     }
 
@@ -54,11 +61,11 @@ public class ScenarioParser {
             int height = Integer.parseInt(HeightStr);
             Boolean res = height >= 0 && height <= 100;
             if (res == false) {
-                System.err.printf("Altitude must be between 0 and 100, instead found: |%d|\n", height);
+                System.out.printf("Altitude must be between 0 and 100, instead found: |%d|\n", height);
             }
             return res;
         } catch (NumberFormatException e) {
-            System.err.printf("Expected a number, instead found: |%s|\n", HeightStr);
+            System.out.printf("Expected a number, instead found: |%s|\n", HeightStr);
             return false;
         }
     }
@@ -68,11 +75,11 @@ public class ScenarioParser {
             int coordinate = Integer.parseInt(CoordinateStr);
             Boolean res = coordinate >= 0;
             if (res == false) {
-                System.err.printf("Coordinate must be a positive number, instead found: |%d|\n", coordinate);
+                System.out.printf("Coordinate must be a positive number, instead found: |%d|\n", coordinate);
             }
             return res;
         } catch (NumberFormatException e) {
-            System.err.printf("Expected a number, instead found: |%s|\n", CoordinateStr);
+            System.out.printf("Expected a number, instead found: |%s|\n", CoordinateStr);
             return false;
         }
     }
@@ -80,11 +87,11 @@ public class ScenarioParser {
     private Boolean isValidFirstLine(String line) {
         String[] words = line.split("\\s");
         if (words.length != 1) {
-            System.err.printf("Expected a number, instead found: |%s|\n", line);
+            System.out.printf("Expected a number, instead found: |%s|\n", line);
             return false;
         }
         if (!isInteger(words[0])) {
-            System.err.printf("Expected a number, instead found: |%s|\n", line);
+            System.out.printf("Expected a number, instead found: |%s|\n", line);
             return false;
         }
         return true;

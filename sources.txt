@@ -1,2 +1,9 @@
 src/avajlauncher/Main.java
-src/avajlauncher/ScenarioParser/ScenarioParser.java
+src/avajlauncher/aircraft/Aircraft.java
+src/avajlauncher/aircraft/Flyable.java
+src/avajlauncher/aircraft/Coordinates.java
+src/avajlauncher/aircraft/AircraftFactory.java
+src/avajlauncher/aircraft/Baloon.java
+src/avajlauncher/aircraft/Helicopter.java
+src/avajlauncher/aircraft/Jetplane.java
+src/avajlauncher/scenarioParser/ScenarioParser.java
