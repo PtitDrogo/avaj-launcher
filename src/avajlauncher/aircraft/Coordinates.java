@@ -10,7 +10,7 @@ public class Coordinates {
         if (p_longitude < 0 || p_latitude < 0 || p_height < 0) {
             //Throw exception that its bad ! Make it my own later.
             throw new IllegalArgumentException("Invalid coordinates: Coordinates must be positive intergers");
-        }
+        } //Later I can make different exceptions or something.
         p_height = Math.min(p_height, 100);
         longitude = p_longitude;
         latitude = p_latitude;

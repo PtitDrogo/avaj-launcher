@@ -14,6 +14,11 @@ public class Main {
             return;
         }
 
+        //This runs the simulation
+        for (int i = 0; i < 25; i++) {
+            tower.changeWeather();
+        }
+
         //Now I want to have a loop that will iterate over my Line and creates the aircrafts
         //I can assume my file has valid format in term of number of words and numbers.
     } 
