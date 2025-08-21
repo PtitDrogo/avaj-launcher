@@ -11,11 +11,9 @@ public class AircraftFactory {
 
         public static AircraftFactory getInstance() {
             if (instance == null) {
-                System.out.println("Creating the factory !");
                 instance = new AircraftFactory();
                 return instance;
             }
-            System.out.println("returning the factory !");
             return instance;
         }
 

@@ -20,7 +20,9 @@ public class Tower {
     }
     
     protected void conditionChanged() {
-        System.out.println("Conditions have changed !");
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).updateConditions();
+        }
     }
 }
 

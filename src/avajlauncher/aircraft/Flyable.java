@@ -1,10 +1,16 @@
 package avajlauncher.aircraft;
 
+import avajlauncher.tower.WeatherTower;
+
 public abstract class Flyable {
-    // protected WeatherTower WeatherTower;
+    protected WeatherTower WeatherTower;
 
     public abstract void updateConditions();
-    // public void registerTower(WeatherTower* p_tower);
+
+    public void registerTower(WeatherTower p_tower) {
+        WeatherTower = p_tower;
+        WeatherTower.register(this);
+    }
     
 }
 

@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import avajlauncher.Consts;
-import avajlauncher.tower.Tower;
+import avajlauncher.tower.WeatherTower;
 
 public class ScenarioParser {
-    public Boolean isValidScenario(String[] args, Tower tower) {
+    public Boolean isValidScenario(String[] args, WeatherTower tower) {
         if (args.length != 1) {
             System.out.println("Invalid number of arguments. Exiting ...");
             return false;
@@ -35,7 +35,7 @@ public class ScenarioParser {
     }
 
 
-    private Boolean validateLine(String line, Tower tower) {
+    private Boolean validateLine(String line, WeatherTower tower) {
         System.out.printf("Validating the line: |%s| \n", line);
         String[] words = line.split("\\s");
         if (words.length != Consts.LEN_PARAM) {
@@ -52,12 +52,14 @@ public class ScenarioParser {
         }
         
 
+        //Below is the most sus part of the entire code, its not bad but its sus.
         //We build our aircraft + add it to towers
         //Below line is too long :D
         Coordinates coordinates = new Coordinates(Integer.parseInt(words[Consts.I_LONGITUDE]),Integer.parseInt(words[Consts.I_LATITUDE]), Integer.parseInt(words[Consts.I_HEIGHT]));
         Flyable flyable = AircraftFactory.getInstance().newAircraft(words[Consts.I_TYPE], words[Consts.I_NAME], coordinates);
-        tower.register(flyable);
-        System.out.println("Adding Flyable to our tower : " + words[Consts.I_TYPE]);
+        flyable.registerTower(tower);
+        // tower.register(flyable);
+        System.out.println("Registering new aircraft to WeatherTower: " + words[Consts.I_TYPE] + ". Safe Flight !");
 
 
         return true;

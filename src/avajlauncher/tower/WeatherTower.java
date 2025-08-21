@@ -9,7 +9,7 @@ public class WeatherTower extends Tower{
     }
 
     public void changeWeather() {
-        System.out.println("Changing the weather !");
+        conditionChanged();
     }
     
 }
