@@ -2,117 +2,91 @@ package avajlauncher.aircraft;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOError;
+import java.io.IOException;
 
 import avajlauncher.Consts;
+import avajlauncher.Exceptions.InvalidCoordinatesException;
+import avajlauncher.Exceptions.InvalidNumberOfSimulations;
 import avajlauncher.tower.WeatherTower;
+import avajlauncher.Exceptions.InvalidScenarioException;
+import avajlauncher.Exceptions.UnsupportedFlyableException;
 
 public class ScenarioParser {
-    public Boolean isValidScenario(String[] args, WeatherTower tower) {
-        if (args.length != 1) {
-            System.out.println("Invalid number of arguments. Exiting ...");
-            return false;
-        }
+    public int processScenario(String[] args, WeatherTower tower) throws InvalidScenarioException {
 
         try {
+            if (args.length != 1) {
+                throw new InvalidScenarioException(
+                        "Invalid number of arguments for Scenario, expected 1, got " + String.valueOf(args.length)
+                                + ".");
+            }
+
             BufferedReader reader = new BufferedReader(new FileReader(args[0]));
             String line = reader.readLine();
-            if (!isValidFirstLine(line)) {
-                reader.close();
-                return false;
-            }
+            int simulations = getNumberOfSimulations(line);
+
             while ((line = reader.readLine()) != null) {
-                if (!validateLine(line, tower)) {
-                    reader.close();
-                    return false;
-                }
+                processLine(line, tower);
             }
             reader.close();
-        } catch (Exception e) {
-            System.out.println("Error while reading the scenario file: " + e.getMessage() + " Exiting ...");
-            return false;
+            return simulations;
         }
-        return true;
+
+        catch (InvalidScenarioException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new InvalidScenarioException("There was an IO Issue with opening the file: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new InvalidScenarioException("Unexpected Error: " + e.getMessage(), e);
+        }
     }
 
-
-    private Boolean validateLine(String line, WeatherTower tower) {
-        System.out.printf("Validating the line: |%s| \n", line);
+    private void processLine(String line, WeatherTower tower) throws InvalidScenarioException {
+        if (line.isEmpty()) {
+            throw new InvalidScenarioException("Scenario file cannot have Empty lines");
+        }
         String[] words = line.split("\\s");
         if (words.length != Consts.LEN_PARAM) {
-            System.out.printf("Expected %d parameters, instead found: |%s|\n", Consts.LEN_PARAM, line);
-            return false;
+            throw new InvalidScenarioException(
+                    "Expected " + Consts.LEN_PARAM + " parameters, instead found: " + String.valueOf(words.length));
         }
-        for (int i = Consts.I_LONGITUDE; i <= Consts.I_LATITUDE; i++) {
-            if (!isValidCoordinate(words[i])) {
-                return false;
-            }
+        try {
+
+            Coordinates coordinates = getScenarioCoordinates(words);
+            Flyable flyable = AircraftFactory.getInstance().newAircraft(words[Consts.I_TYPE], words[Consts.I_NAME],
+                    coordinates);
+            flyable.registerTower(tower);
+            System.out.println("Registering new aircraft to WeatherTower: " + words[Consts.I_TYPE] + ". Safe Flight !");
+
+        } catch (InvalidCoordinatesException e) {
+            throw new InvalidScenarioException("Error in Scenario File: Invalid coordinates");
+        } catch (UnsupportedFlyableException e) {
+            throw new InvalidScenarioException("Error in Scenario File: Invalid Flyable name");
         }
-        if (!isValidHeight(words[Consts.I_HEIGHT])) {
-            return false;
-        }
-        
-
-        //Below is the most sus part of the entire code, its not bad but its sus.
-        //We build our aircraft + add it to towers
-        //Below line is too long :D
-        Coordinates coordinates = new Coordinates(Integer.parseInt(words[Consts.I_LONGITUDE]),Integer.parseInt(words[Consts.I_LATITUDE]), Integer.parseInt(words[Consts.I_HEIGHT]));
-        Flyable flyable = AircraftFactory.getInstance().newAircraft(words[Consts.I_TYPE], words[Consts.I_NAME], coordinates);
-        flyable.registerTower(tower);
-        // tower.register(flyable);
-        System.out.println("Registering new aircraft to WeatherTower: " + words[Consts.I_TYPE] + ". Safe Flight !");
-
-
-        return true;
     }
 
-    private Boolean isValidHeight(String HeightStr) {
+    private int getNumberOfSimulations(String line) throws InvalidNumberOfSimulations {
         try {
-            int height = Integer.parseInt(HeightStr);
-            Boolean res = height >= 0 && height <= 100;
-            if (res == false) {
-                System.out.printf("Altitude must be between 0 and 100, instead found: |%d|\n", height);
+            int res = Integer.parseInt(line);
+            if (res <= 0) {
+                throw new InvalidNumberOfSimulations(
+                        "Number of simulations must be a positive integer, instead found:|" + line + "|");
             }
             return res;
         } catch (NumberFormatException e) {
-            System.out.printf("Expected a number, instead found: |%s|\n", HeightStr);
-            return false;
+            throw new InvalidNumberOfSimulations("Expected a number, instead found:|" + line + "|", e);
         }
     }
 
-    private Boolean isValidCoordinate(String CoordinateStr) {
+    private Coordinates getScenarioCoordinates(String[] words) throws InvalidCoordinatesException {
         try {
-            int coordinate = Integer.parseInt(CoordinateStr);
-            Boolean res = coordinate >= 0;
-            if (res == false) {
-                System.out.printf("Coordinate must be a positive number, instead found: |%d|\n", coordinate);
-            }
-            return res;
+            int longitude = Integer.parseInt(words[Consts.I_LONGITUDE]);
+            int latitude = Integer.parseInt(words[Consts.I_LATITUDE]);
+            int height = Integer.parseInt(words[Consts.I_HEIGHT]);
+            return new Coordinates(longitude, latitude, height);
         } catch (NumberFormatException e) {
-            System.out.printf("Expected a number, instead found: |%s|\n", CoordinateStr);
-            return false;
+            throw new InvalidCoordinatesException("Coordinates must be positive Integers");
         }
     }
-
-    private Boolean isValidFirstLine(String line) {
-        String[] words = line.split("\\s");
-        if (words.length != 1) {
-            System.out.printf("Expected a number, instead found: |%s|\n", line);
-            return false;
-        }
-        if (!isInteger(words[0])) {
-            System.out.printf("Expected a number, instead found: |%s|\n", line);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
 }

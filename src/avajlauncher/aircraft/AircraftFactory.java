@@ -1,6 +1,7 @@
 package avajlauncher.aircraft;
 
 import avajlauncher.Consts;
+import avajlauncher.Exceptions.UnsupportedFlyableException;
 
 public class AircraftFactory {
         static private long id = 0;
@@ -17,7 +18,7 @@ public class AircraftFactory {
             return instance;
         }
 
-        public Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
+        public Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws UnsupportedFlyableException {
             id++;
             String AircraftType = p_type.toUpperCase();         
 
@@ -32,9 +33,7 @@ public class AircraftFactory {
                     System.out.printf("Created aircraft of type |%s| with id %d\n", p_type, id);
                     return new Jetplane(id, p_name, p_coordinates);
                 default:
-                    //BONUS: This will be an exception that exits our programm later
-                    System.out.printf("Could not create an Aircraft, the type : |%s| is not supported.", p_type);
-                    return null;
+                    throw new UnsupportedFlyableException("Could not create an Aircraft, the type:|" + p_type + "| is not supported.");
             }
         }
 
