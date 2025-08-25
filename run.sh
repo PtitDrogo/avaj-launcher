@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp build avajlauncher.Simulation "$@"
+java -cp build fortytwo.tfreydie.avajlauncher.Simulation "$@"
