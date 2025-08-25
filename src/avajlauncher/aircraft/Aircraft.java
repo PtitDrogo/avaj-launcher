@@ -1,5 +1,7 @@
 package avajlauncher.aircraft;
 
+import java.io.IOError;
+import java.io.IOException;
 
 public class Aircraft extends Flyable {
     protected Long id;
@@ -13,8 +15,8 @@ public class Aircraft extends Flyable {
     }
 
     @Override
-    public void updateConditions() {
-        System.out.println("Generic aircraft updating conditions"); //This should never be triggered in theory.
+    public void updateConditions() throws IOException {
+        //Necessary because UML wants Aircraft to be a concrete class
     }
 }
 

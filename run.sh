@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp build avajlauncher.Main "$@"
+java -cp build avajlauncher.Simulation "$@"

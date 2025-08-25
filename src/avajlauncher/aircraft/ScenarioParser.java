@@ -2,7 +2,6 @@ package avajlauncher.aircraft;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOError;
 import java.io.IOException;
 
 import avajlauncher.Consts;
