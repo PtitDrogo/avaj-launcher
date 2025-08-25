@@ -23,7 +23,7 @@ public class Baloon extends Aircraft {
                             coordinates.getLongitude() + 2,
                             coordinates.getLatitude(),
                             coordinates.getHeight() + 4);
-                    writer.write(Consts.BALOON + "#" + name + "(" + id + "): " + "In the sun just chilling !");
+                    writer.write(getIDString() + "In the sun just chilling !");
                     break;
                 case Consts.RAIN:
                     coordinates = new Coordinates(
@@ -31,23 +31,21 @@ public class Baloon extends Aircraft {
                             coordinates.getLatitude(),
                             coordinates.getHeight() - 5);
                     System.out
-                            .println(Consts.BALOON + "#" + name + "(" + id + "): " + "Rain on my baloon, kinda cozy.");
+                            .println(getIDString() + "Rain on my baloon, kinda cozy.");
                     break;
                 case Consts.FOG:
                     coordinates = new Coordinates(
                             coordinates.getLongitude(),
                             coordinates.getLatitude(),
                             coordinates.getHeight() - 3);
-                    writer.write(Consts.BALOON + "#" + name + "(" + id + "): "
-                            + "With this fog a bird could pierce my baloon with its beak, scary.");
+                    writer.write(getIDString() + "With this fog a bird could pierce my baloon with its beak, scary.");
                     break;
                 case Consts.SNOW:
                     coordinates = new Coordinates(
                             coordinates.getLongitude(),
                             coordinates.getLatitude(),
                             coordinates.getHeight() - 15);
-                    writer.write(
-                            Consts.BALOON + "#" + name + "(" + id + "): " + "This snow is making me go down, Curses !");
+                    writer.write(getIDString() + "This snow is making me go down, Curses !");
                     break;
                 default:
                     System.out.printf("Unsupported Weather\n");
@@ -55,9 +53,15 @@ public class Baloon extends Aircraft {
             }
         } catch (InvalidCoordinatesException e) {
             WeatherTower.unregister(this);
-            writer.write(Consts.BALOON + "#" + name + "(" + id + "): I am Landing ! Unregistering from WeatherTower");
+            writer.write(getIDString() + "I am Landing Slowly ! Unregistering from WeatherTower");
         }
     }
+
+    @Override
+    public String getIDString() {
+        return Consts.BALOON + "#" + name + "(" + id + "): ";        
+    }
+
 }
 
 // class Baloon

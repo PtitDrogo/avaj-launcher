@@ -22,6 +22,7 @@ public class Writer {
 
     public void write(String text) throws IOException {
         writer.write(text);
+        writer.newLine();
     }
 
     public void close() throws IOException {

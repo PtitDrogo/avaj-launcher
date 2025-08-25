@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import avajlauncher.Consts;
+import avajlauncher.Writer;
 import avajlauncher.Exceptions.InvalidCoordinatesException;
 import avajlauncher.Exceptions.InvalidNumberOfSimulations;
 import avajlauncher.tower.WeatherTower;
@@ -41,23 +42,21 @@ public class ScenarioParser {
         }
     }
 
-    private void processLine(String line, WeatherTower tower) throws InvalidScenarioException {
+    private void processLine(String line, WeatherTower tower) throws InvalidScenarioException, IOException {
         if (line.isEmpty()) {
             throw new InvalidScenarioException("Scenario file cannot have Empty lines");
         }
         String[] words = line.split("\\s");
         if (words.length != Consts.LEN_PARAM) {
-            throw new InvalidScenarioException(
-                    "Expected " + Consts.LEN_PARAM + " parameters, instead found: " + String.valueOf(words.length));
+            throw new InvalidScenarioException("Expected " + Consts.LEN_PARAM + " parameters, instead found: " + String.valueOf(words.length));
         }
         try {
-
             Coordinates coordinates = getScenarioCoordinates(words);
-            Flyable flyable = AircraftFactory.getInstance().newAircraft(words[Consts.I_TYPE], words[Consts.I_NAME],
+            Flyable flyable = AircraftFactory.getInstance().newAircraft(
+                    words[Consts.I_TYPE],
+                    words[Consts.I_NAME],
                     coordinates);
             flyable.registerTower(tower);
-            System.out.println("Registering new aircraft to WeatherTower: " + words[Consts.I_TYPE] + ". Safe Flight !");
-
         } catch (InvalidCoordinatesException e) {
             throw new InvalidScenarioException("Error in Scenario File: Invalid coordinates");
         } catch (UnsupportedFlyableException e) {

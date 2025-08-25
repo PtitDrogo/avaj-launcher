@@ -1,14 +1,16 @@
 package avajlauncher.tower;
 
+import java.io.IOException;
+
 import avajlauncher.aircraft.Coordinates;
 
-public class WeatherTower extends Tower{
+public class WeatherTower extends Tower {
 
     public String getWeather(Coordinates p_coordinates) {
-        return WeatherProvider.getInstance().getCurrentWeather(p_coordinates); //I mean what else could it be
+        return WeatherProvider.getInstance().getCurrentWeather(p_coordinates);
     }
 
-    public void changeWeather() {
+    public void changeWeather() throws IOException {
         conditionChanged();
     }
     

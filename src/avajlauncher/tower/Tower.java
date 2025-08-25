@@ -1,6 +1,8 @@
 package avajlauncher.tower;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
 import avajlauncher.aircraft.Flyable;
 
 
@@ -19,7 +21,7 @@ public class Tower {
         observers.remove(p_flyable);
     }
     
-    protected void conditionChanged() {
+    protected void conditionChanged() throws IOException {
         for (int i = 0; i < observers.size(); i++) {
             observers.get(i).updateConditions();
         }

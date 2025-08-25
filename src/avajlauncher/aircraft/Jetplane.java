@@ -22,40 +22,41 @@ public class Jetplane extends Aircraft {
 							coordinates.getLongitude(),
 							coordinates.getLatitude() + 10,
 							coordinates.getHeight() + 2);
-					writer.write(Consts.JETPLANE + "#" + name + "(" + id + "): "
-							+ "Time to spread some chemtrails !");
+					writer.write(getIDString() + "Time to spread some chemtrails !");
 					break;
 				case Consts.RAIN:
 					coordinates = new Coordinates(
 							coordinates.getLongitude(),
 							coordinates.getLatitude() + 5,
 							coordinates.getHeight());
-					writer.write(Consts.JETPLANE + "#" + name + "(" + id + "): "
-							+ "Turbulences are when flying a plane becomes fun.");
+					writer.write(getIDString() + "Turbulences are when flying a plane becomes fun.");
 					break;
 				case Consts.FOG:
 					coordinates = new Coordinates(
 							coordinates.getLongitude(),
 							coordinates.getLatitude() + 1,
 							coordinates.getHeight());
-					writer.write(Consts.JETPLANE + "#" + name + "(" + id + "): "
-							+ "Good thing I have this radar I don't see a thing !");
+					writer.write(getIDString() + "Good thing I have this radar I don't see a thing !");
 					break;
 				case Consts.SNOW:
 					coordinates = new Coordinates(
 							coordinates.getLongitude(),
 							coordinates.getLatitude(),
 							coordinates.getHeight() - 7);
-					writer.write(Consts.JETPLANE + "#" + name + "(" + id + "): "
-							+ "I love snow, in 50 years it will be all gone !");
+					writer.write(getIDString() + "I love snow, in 50 years it will be all gone !");
 					break;
 				default:
 					System.out.printf("Unsupported Weather\n");
 			}
 		} catch (InvalidCoordinatesException e) {
 			WeatherTower.unregister(this);
-			writer.write(Consts.JETPLANE + "#" + name + "(" + id + "): I am Landing ! Unregistering from WeatherTower");
+			writer.write(getIDString() + "): I am Landing and this time I won't crash ! Unregistering from WeatherTower");
 		}
+	}
+
+	@Override
+	public String getIDString() {
+		return Consts.JETPLANE + "#" + name + "(" + id + "): ";
 	}
 }
 

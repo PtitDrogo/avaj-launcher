@@ -14,5 +14,5 @@ src/avajlauncher/Exceptions/InvalidCoordinatesException.java
 src/avajlauncher/Exceptions/UnsupportedFlyableException.java
 src/avajlauncher/Exceptions/InvalidNumberOfSimulations.java
 src/avajlauncher/Exceptions/InvalidScenarioException.java
-src/avajlauncher/Logger.java
 src/avajlauncher/Simulation.java
+src/avajlauncher/Writer.java

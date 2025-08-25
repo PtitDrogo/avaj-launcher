@@ -17,4 +17,6 @@ public class Consts {
     public static final String BALOON = "BALOON";
     public static final String JETPLANE = "JETPLANE";
     public static final String HELICOPTER = "HELICOPTER";
+
+    public static final String FILE_NAME = "Simulation.txt";
 }

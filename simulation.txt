@@ -1,1 +1,9 @@
-Coucou la team wooooohoooo
+Registering to WeatherTower - BALOON#B1(1):  Safe Flight !
+Registering to WeatherTower - BALOON#B2(2):  Safe Flight !
+Registering to WeatherTower - JETPLANE#J1(3):  Safe Flight !
+Registering to WeatherTower - HELICOPTER#H1(4):  Safe Flight !
+Registering to WeatherTower - HELICOPTER#H2(5):  Safe Flight !
+Registering to WeatherTower - HELICOPTER#H3(6):  Safe Flight !
+Registering to WeatherTower - BALOON#B3(7):  Safe Flight !
+Registering to WeatherTower - JETPLANE#J2(8):  Safe Flight !
+Registering to WeatherTower - HELICOPTER#H4(9):  Safe Flight !

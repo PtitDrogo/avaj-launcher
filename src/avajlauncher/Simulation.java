@@ -2,6 +2,8 @@ package avajlauncher;
 
 import avajlauncher.aircraft.ScenarioParser;
 import avajlauncher.tower.WeatherTower;
+
+import java.io.File;
 import java.io.IOException;
 
 import avajlauncher.Exceptions.InvalidScenarioException;
@@ -18,14 +20,18 @@ public class Simulation {
             Writer.getInstance().close();
         } catch (InvalidScenarioException e) {
             System.out.println("Error while reading the scenario file: " + e.getMessage());
-            System.out.println("CAUSE:" + e.getCause());
+            if (e.getCause() != null) { //e.getCause() != e && 
+                System.out.println("CAUSE:" + e.getCause());
+            }
             System.out.println("Exiting ...");
+            return;
         } catch (IOException e) {
             System.out.println("Error while writing the simulation file: " + e.getMessage());
+            return;
         }
+        System.out.println("Simulation ran successfully !");
     }
 }
 
 
 
-    // static BufferedWriter writer;
